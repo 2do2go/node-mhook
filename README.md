@@ -43,7 +43,7 @@ hook.trigger('beforeUpdate', {}, function(err) {
 
 ```
 
-for getting `on` and `trigger` methods to you object you can inherits from `Hook`
+for getting `on` and `trigger` methods to your object you can inherits from `Hook`
 
 
 ```js
@@ -72,7 +72,7 @@ Model.prototype.update = function(obj, callback) {
 
 var model = new Model();
 
-model.on('beforeUpdate', obj, function(obj, done) {
+model.on('beforeUpdate', function(obj, done) {
 	console.log('before update object: ', obj);
 	done();
 });
