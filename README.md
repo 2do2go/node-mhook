@@ -83,21 +83,21 @@ model.on('beforeUpdate', function(obj, done) {
 ## Api
 
   - [Hook()](#hook)
-  - [Hook.on()](#hookon)
-  - [Hook.trigger()](#hooktrigger)
+  - [Hook.on()](#hookonactionstringhookfunction)
+  - [Hook.trigger()](#hooktriggeractionstringhookparamsobjectcallbackfunction)
 
-### Hook()
+## Hook()
 
   Hook constructor
   
   accepts array of string `actions` - possible actions which could be used
   at `on` and `trigger`
 
-### Hook.on()
+## Hook.on(action:String, hook:Function)
 
-  Bind `hook` function on `action`
+  Bind `hook` on `action`
 
-### Hook.trigger()
+## Hook.trigger(action:String, hookParams:Object, [callback]:Function)
 
   Trigger some `action` with `hookParams` (object which will be passed to
   every hook function).
