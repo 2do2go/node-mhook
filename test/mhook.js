@@ -19,24 +19,24 @@ describe('hook', function() {
 
 	var results = [];
 	it('add some hooks which do their job', function() {
-		hook.on('beforeUpdate', function(params, done) {
-			results.push(params.id + 1);
+		hook.on('beforeUpdate', function(n, m, done) {
+			results.push(n + m + 1);
 			done();
 		});
-		hook.on('beforeUpdate', function(params, done) {
-			results.push(params.id + 2);
+		hook.on('beforeUpdate', function(n, m, done) {
+			results.push(n + m + 2);
 			done();
 		});
-		hook.on('beforeUpdate', function(params, done) {
-			results.push(params.id + 3);
+		hook.on('beforeUpdate', function(n, m, done) {
+			results.push(n + m + 3);
 			done();
 		});
 	});
 
 	it('trigger that hooks and check the results', function(done) {
-		hook.trigger('beforeUpdate', {id: 1}, function(err) {
+		hook.trigger('beforeUpdate', [1, 2], function(err) {
 			if (err) done(err);
-			expect(results).eql([2, 3, 4]);
+			expect(results).eql([4, 5, 6]);
 			done();
 		});
 	});
@@ -61,7 +61,7 @@ describe('hook', function() {
 	});
 
 	it('trigger that hooks and expect error at callback', function(done) {
-		hook.trigger('beforeUpdate', {id: 1}, function(err) {
+		hook.trigger('beforeUpdate', [{id: 1}], function(err) {
 			expect(err).ok();
 			expect(err.message).equal('Some error');
 			expect(results).eql([2]);
@@ -71,7 +71,7 @@ describe('hook', function() {
 
 	it('trigger that hooks woh call and expect throw error', function() {
 		expect(function() {
-			hook.trigger('beforeUpdate', {id: 1});
+			hook.trigger('beforeUpdate', [{id: 1}]);
 		}).throwException(/^Some error/);
 		expect(results).eql([2, 2]);
 	});

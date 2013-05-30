@@ -24,19 +24,19 @@ var Hook = require('mhook').Hook;
 var hook = new Hook(['beforeUpdate', 'afterUpdate', 'afterRemove']);
 
 // add some hook
-hook.on('beforeUpdate', function(params, done) {
+hook.on('beforeUpdate', function(done) {
 	// do something, and then say that you done,
 	// pass error as first argument to done
 	done();
 });
 
 // add another hook
-hook.on('beforeUpdate', function(params, done) {
+hook.on('beforeUpdate', function(done) {
 	done();
 });
 
 // trigger `action` - executes all two hooks
-hook.trigger('beforeUpdate', {}, function(err) {
+hook.trigger('beforeUpdate', [], function(err) {
 	// this function will be called after all
 	// hooks done or one of them fail
 });
@@ -62,7 +62,7 @@ inherits(Model, Hook);
 
 // now we can use `on` and `trigger` as own methods
 Model.prototype.update = function(obj, callback) {
-	this.trigger('beforeUpdate', obj, function(err) {
+	this.trigger('beforeUpdate', [obj], function(err) {
 		if (err) {callback(err); return}
 		// update
 		// trigger afterUpdate, etc
@@ -84,7 +84,7 @@ model.on('beforeUpdate', function(obj, done) {
 
   - [Hook()](#hook)
   - [Hook.on()](#hookonactionstringhookfunction)
-  - [Hook.trigger()](#hooktriggeractionstringhookparamsobjectcallbackfunction)
+  - [Hook.trigger()](#hooktriggeractionstringhookargsarraycallbackfunction)
 
 ## Hook()
 
@@ -97,9 +97,9 @@ model.on('beforeUpdate', function(obj, done) {
 
   Bind `hook` on `action`
 
-## Hook.trigger(action:String, hookParams:Object, [callback]:Function)
+## Hook.trigger(action:String, hookArgs:Array, [callback]:Function)
 
-  Trigger some `action` with `hookParams` (object which will be passed to
+  Trigger some `action` with `hookArgs` (arguments which will be passed to
   every hook function).
   If `callback` (accepts error as first argument) function presents it will be
   called after hooks execution.
