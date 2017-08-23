@@ -1,26 +1,27 @@
 {
-	"name": "mhook",
-	"version": "0.1.1",
-	"description": "Middleware like hooks for node.js",
-	"author": "Oleg Korobenko <oleg.korobenko@gmail.com>",
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/okv/mhook"
-	},
-	"keywords": [
-		"hook", "middlewre", "trigger", "event"
-	],
-	"scripts": {
-		"test": "mocha test --reporter spec --bail",
-		"mkapidoc": "dox --api < lib/mhook.js"
-	},
-	"dependencies": {
-	},
-	"devDependencies": {
-		"mocha": "1.9.0",
-		"expect.js": "0.2.0",
-		"dox": "0.4.3"
-	},
-	"main": "./lib/mhook"
+  "name": "mhook",
+  "version": "0.1.1",
+  "description": "Middleware like hooks for node.js",
+  "author": "Oleg Korobenko <oleg.korobenko@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/okv/mhook"
+  },
+  "keywords": [
+    "hook",
+    "middlewre",
+    "trigger",
+    "event"
+  ],
+  "scripts": {
+    "test": "mocha test --reporter spec --bail",
+    "mkapidoc": "dox --api < lib/mhook.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "dox": "0.4.3",
+    "expect.js": "0.3.1",
+    "mocha": "3.5.0"
+  },
+  "main": "./lib/mhook"
 }
-

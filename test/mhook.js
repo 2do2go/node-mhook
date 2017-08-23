@@ -6,7 +6,7 @@ var expect = require('expect.js'),
 describe('hook', function() {
 
 	var hook = null;
-	
+
 	it('instanciate new hook with actions without errors', function() {
 		hook = new Hook(['beforeUpdate', 'afterUpdate', 'afterRemove']);
 	});
@@ -19,25 +19,23 @@ describe('hook', function() {
 
 	var results = [];
 	it('add some hooks which do their job', function() {
-		hook.on('beforeUpdate', function(n, m, done) {
+		hook.on('beforeUpdate', function(n, m) {
 			results.push(n + m + 1);
-			done();
+			return Promise.resolve();
 		});
-		hook.on('beforeUpdate', function(n, m, done) {
+		hook.on('beforeUpdate', function(n, m, next) {
 			results.push(n + m + 2);
-			done();
+			next();
 		});
-		hook.on('beforeUpdate', function(n, m, done) {
+		hook.on('beforeUpdate', function(n, m) {
 			results.push(n + m + 3);
-			done();
+			return Promise.resolve();
 		});
 	});
 
-	it('trigger that hooks and check the results', function(done) {
-		hook.trigger('beforeUpdate', [1, 2], function(err) {
-			if (err) done(err);
+	it('trigger that hooks and check the results', function() {
+		return hook.trigger('beforeUpdate', [1, 2]).then(function() {
 			expect(results).eql([4, 5, 6]);
-			done();
 		});
 	});
 
@@ -47,33 +45,24 @@ describe('hook', function() {
 	});
 
 	it('add some hooks but middle are broken', function() {
-		hook.on('beforeUpdate', function(params, done) {
+		hook.on('beforeUpdate', function(params) {
 			results.push(params.id + 1);
-			done();
+			return Promise.resolve();
 		});
-		hook.on('beforeUpdate', function(params, done) {
-			done(new Error('Some error'));
+		hook.on('beforeUpdate', function(params) {
+			return Promise.reject(new Error('Some error'));
 		});
-		hook.on('beforeUpdate', function(params, done) {
+		hook.on('beforeUpdate', function(params) {
 			results.push(params.id + 3);
-			done();
+			return Promise.resolve();
 		});
 	});
 
-	it('trigger that hooks and expect error at callback', function(done) {
-		hook.trigger('beforeUpdate', [{id: 1}], function(err) {
+	it('trigger that hooks and expect catch error', function() {
+		return hook.trigger('beforeUpdate', [{id: 1}]).catch(function(err) {
 			expect(err).ok();
 			expect(err.message).equal('Some error');
 			expect(results).eql([2]);
-			done();
 		});
 	});
-
-	it('trigger that hooks woh call and expect throw error', function() {
-		expect(function() {
-			hook.trigger('beforeUpdate', [{id: 1}]);
-		}).throwException(/^Some error/);
-		expect(results).eql([2, 2]);
-	});
-
 });
