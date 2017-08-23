@@ -14,7 +14,8 @@ npm install mhook
 ## Usage
 
 Define your actions, bind hooks on them, trigger actions.
-When you trigger an action all binded hooks will be sequentially executed. 
+When you trigger an action all binded hooks will be sequentially executed.
+Be careful, hook function should return promise or call provided callback, otherwise trigger will hang.
 
 ```js
 
@@ -23,22 +24,29 @@ var Hook = require('mhook').Hook;
 
 var hook = new Hook(['beforeUpdate', 'afterUpdate', 'afterRemove']);
 
-// add some hook
+// add hook with callback
 hook.on('beforeUpdate', function(done) {
 	// do something, and then say that you done,
 	// pass error as first argument to done
 	done();
 });
 
-// add another hook
-hook.on('beforeUpdate', function(done) {
-	done();
+// add another hook with promise
+hook.on('beforeUpdate', function() {
+	return Promise.resolve();
 });
 
 // trigger `action` - executes all two hooks
 hook.trigger('beforeUpdate', [], function(err) {
 	// this function will be called after all
 	// hooks done or one of them fail
+});
+
+// trigger also return promise
+hook.trigger('beforeUpdate', []).then(function(err) {
+	// all hooks successfully done
+}).catch(function(err) {
+	// one of them fail
 });
 
 ```
@@ -84,12 +92,12 @@ model.on('beforeUpdate', function(obj, done) {
 
   - [Hook()](#hook)
   - [Hook.on()](#hookonactionstringhookfunction)
-  - [Hook.trigger()](#hooktriggeractionstringhookargsarraycallbackfunction)
+  - [Hook.trigger()](#hooktriggeractionstringhookargsarray)
 
 ## Hook()
 
   Hook constructor
-  
+
   accepts array of string `actions` - possible actions which could be used
   at `on` and `trigger`
 
@@ -97,11 +105,14 @@ model.on('beforeUpdate', function(obj, done) {
 
   Bind `hook` on `action`
 
-## Hook.trigger(action:String, hookArgs:Array, [callback]:Function)
+## Hook.trigger(action:String, hookArgs:Array)
 
   Trigger some `action` with `hookArgs` (arguments which will be passed to
   every hook function).
   If `callback` (accepts error as first argument) function presents it will be
+  called after hooks execution.
+  Return promise which will be resolved after hooks execution.
+
   called after hooks execution.
 
 
