@@ -116,4 +116,4 @@ model.on('beforeUpdate', function(obj, done) {
 
 ## Running test
 
-into cloned repository run
+Into cloned repository run `npm run test`
