@@ -92,7 +92,7 @@ model.on('beforeUpdate', function(obj, done) {
 
   - [Hook()](#hook)
   - [Hook.on()](#hookonactionstringhookfunction)
-  - [Hook.trigger()](#hooktriggeractionstringhookargsarray)
+  - [Hook.trigger()](#hooktriggeractionstringhookargsarraycallbackfunction)
 
 ## Hook()
 
@@ -105,15 +105,13 @@ model.on('beforeUpdate', function(obj, done) {
 
   Bind `hook` on `action`
 
-## Hook.trigger(action:String, hookArgs:Array)
+## Hook.trigger(action:String, hookArgs:Array, [callback]:Function)
 
   Trigger some `action` with `hookArgs` (arguments which will be passed to
   every hook function).
   If `callback` (accepts error as first argument) function presents it will be
   called after hooks execution.
   Return promise which will be resolved after hooks execution.
-
-  called after hooks execution.
 
 
 ## Running test
