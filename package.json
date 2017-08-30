@@ -15,14 +15,15 @@
     "event"
   ],
   "scripts": {
+    "lint": "jshint ./",
     "test": "mocha test --reporter spec --bail",
     "coverage": "nyc npm run test",
     "mkapidoc": "dox --api < lib/mhook.js"
   },
-  "dependencies": {},
   "devDependencies": {
     "dox": "0.4.3",
     "expect.js": "0.3.1",
+    "jshint": "2.4.4",
     "mocha": "3.5.0",
     "nyc": "11.1.0",
     "sinon": "3.2.1"

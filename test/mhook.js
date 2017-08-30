@@ -120,7 +120,7 @@ describe('hook', function() {
 			it('create and trigger hook', function() {
 				hook.on('beforeUpdate', function(n, m, next) {
 					spy(1, n, m);
-					next()
+					next();
 				}).on('beforeUpdate', function(n, m, next) {
 					spy(2, n, m);
 					next();
@@ -179,7 +179,7 @@ describe('hook', function() {
 			it('create and trigger hook', function(done) {
 				hook.on('beforeUpdate', function(n, m, next) {
 					spy(1, n, m);
-					next()
+					next();
 				}).on('beforeUpdate', function(n, m, next) {
 					spy(2, n, m);
 					next(new Error('second error'));
