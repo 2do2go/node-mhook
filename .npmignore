@@ -1,2 +1,5 @@
 .npmignore
 test
+coverage
+.nycrc
+.nyc_output

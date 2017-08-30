@@ -1,0 +1,11 @@
+{
+	"all": true,
+	"reporter": [
+		"text-summary"
+	],
+	"exclude": [
+		"node_modules/**",
+		"test/**",
+		"coverage/**"
+	]
+}
