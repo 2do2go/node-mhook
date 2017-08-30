@@ -3,6 +3,8 @@
 Middleware like hooks for node.js which is useful for building some relations
 between entities (ODM, ORM, etc).
 
+[![Build Status](https://travis-ci.org/2do2go/node-mhook.svg?branch=master)](https://travis-ci.org/2do2go/node-mhook)
+
 
 ## Installation
 
