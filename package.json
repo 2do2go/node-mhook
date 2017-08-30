@@ -2,10 +2,11 @@
   "name": "mhook",
   "version": "0.1.1",
   "description": "Middleware like hooks for node.js",
-  "author": "Oleg Korobenko <oleg.korobenko@gmail.com>",
+  "author": "2do2go team <dev.2do2go@gmail.com>",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/okv/mhook"
+    "url": "git://github.com/2do2go/mhook"
   },
   "keywords": [
     "hook",
