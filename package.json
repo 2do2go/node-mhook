@@ -1,6 +1,6 @@
 {
   "name": "mhook",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Middleware like hooks for node.js",
   "author": "2do2go team <dev.2do2go@gmail.com>",
   "license": "MIT",
