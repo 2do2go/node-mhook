@@ -88,21 +88,25 @@ describe('hook', function() {
 
 		describe('with promise hooks', function() {
 			var hook = new Hook(['beforeUpdate']),
-				spy = sinon.spy();
+				spy = sinon.spy(),
+				error = null;
 
-			it('create and trigger hook', function() {
+			it('create and trigger hook', function(done) {
 				hook.on('beforeUpdate', function(n, m) {
 					spy(1, n, m);
-					return Promise.resolve();
+					return Promise.resolve('some result');
 				}).on('beforeUpdate', function(n, m) {
 					spy(2, n, m);
-					return Promise.resolve();
+					return Promise.resolve('some result');
 				}).on('beforeUpdate', function(n, m) {
 					spy(3, n, m);
-					return Promise.resolve();
+					return Promise.resolve('some result');
 				});
 
-				return hook.trigger('beforeUpdate', [1, 2]);
+				hook.trigger('beforeUpdate', [1, 2], function(err) {
+					error = err;
+					done();
+				});
 			});
 
 			it('check results', function() {
@@ -110,26 +114,31 @@ describe('hook', function() {
 				expect(spy.firstCall.calledWith(1, 1, 2)).to.ok();
 				expect(spy.secondCall.calledWith(2, 1, 2)).to.ok();
 				expect(spy.thirdCall.calledWith(3, 1, 2)).to.ok();
+				expect(error).to.not.ok();
 			});
 		});
 
 		describe('with callback hooks', function() {
 			var hook = new Hook(['beforeUpdate']),
-				spy = sinon.spy();
+				spy = sinon.spy(),
+				error = null;
 
-			it('create and trigger hook', function() {
+			it('create and trigger hook', function(done) {
 				hook.on('beforeUpdate', function(n, m, next) {
 					spy(1, n, m);
-					next();
+					next(null, 'some result');
 				}).on('beforeUpdate', function(n, m, next) {
 					spy(2, n, m);
-					next();
+					next(null, 'some result');
 				}).on('beforeUpdate', function(n, m, next) {
 					spy(3, n, m);
-					next();
+					next(null, 'some result');
 				});
 
-				return hook.trigger('beforeUpdate', [1, 2]);
+				hook.trigger('beforeUpdate', [1, 2], function(err) {
+					error = err;
+					done();
+				});
 			});
 
 			it('check results', function() {
@@ -137,6 +146,7 @@ describe('hook', function() {
 				expect(spy.firstCall.calledWith(1, 1, 2)).to.ok();
 				expect(spy.secondCall.calledWith(2, 1, 2)).to.ok();
 				expect(spy.thirdCall.calledWith(3, 1, 2)).to.ok();
+				expect(error).to.not.ok();
 			});
 		});
 
